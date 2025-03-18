@@ -89,6 +89,7 @@ model K12Details {
   stream    String? 
   city      String?
   country   String?
+  state     String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 

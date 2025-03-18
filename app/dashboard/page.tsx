@@ -3,9 +3,11 @@
 import userDetails from '@/actions/userDetails'
 import { Button } from '@/components/ui/button'
 import { useSession } from '@/lib/auth-client'
+import { useDiffentPhase } from '@/zustand/firstphase'
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
-import React, { useState } from 'react'
+import { redirect } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 
 // Define types for cleaner code
 interface UserDetails {
@@ -22,6 +24,11 @@ const subjects: Record<string, string[]> = {
 };
 
 const DashboardPage: React.FC = () => {
+  const reset = useDiffentPhase((state) => state.reset);
+  const phase = useDiffentPhase((state) => state.phase);
+  useEffect(()=>{
+    reset()
+  })
   const session = useSession();
   const { data: user, error, isFetching } = useQuery<any>({ queryKey: ['userDetails'], queryFn: userDetails });
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
@@ -73,15 +80,18 @@ const DashboardPage: React.FC = () => {
           <h3 className="text-2xl font-semibold mb-4">Explore {selectedSubject} Topics 🚀</h3>
           <div className="grid grid-cols-2 gap-4">
             {subjects[selectedSubject].map((topic) => (
-              <Link href={`/dashboard/${topic}`}>
+             
 
               <Button
+              onClick={()=>{
+                redirect(`/dashboard/${topic}`)
+              }}
                 key={topic}
                 className="px-6 py-3 rounded-lg font-medium transition hover:bg-blue-400"
                 >
                 {topic}
               </Button>
-              </Link>
+              
             ))}
           </div>
         </div>

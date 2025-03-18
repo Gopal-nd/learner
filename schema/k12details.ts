@@ -6,6 +6,7 @@ export const formSchema = z.object({
   board: z.enum(["CBSE", "ICSE", "State Board", "IB", "IGCSE"]),
   stream: z.string().optional(),
   city: z.string().min(1, "City is required"),
+  state:z.string().min(1,"state is required"),
   country: z.enum(["India", "USA", "UK", "Canada", "Australia"]),
 });
 

@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 
-const FinalQuiz = ({ subject, aiScore }: { subject: string; aiScore: number }) => {
+const FinalQuiz = ({ subject, }: { subject: string; }) => {
   const [finalScore, setFinalScore] = useState(0)
   const [passed, setPassed] = useState<boolean | null>(null)
 
@@ -16,7 +16,7 @@ const FinalQuiz = ({ subject, aiScore }: { subject: string; aiScore: number }) =
   return (
     <div>
       <h2 className="text-2xl font-semibold mb-4">Final Exam on {subject}</h2>
-      <p>Your AI Quiz Score: {aiScore}/10</p>
+      <p>Your AI Quiz Score: 9/10</p>
       <p>Answer the 20 final exam questions to complete the course.</p>
       <button className="mt-4 px-4 py-2 rounded-lg hover:bg-muted" onClick={handleFinalSubmit}>
         Submit Final Exam

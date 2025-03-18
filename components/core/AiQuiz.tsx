@@ -1,26 +1,50 @@
 'use client'
-import React, { useState } from 'react'
+import FirstPhaseQuizz from '@/actions/firstPhaseQuizz';
+import { useQuery } from '@tanstack/react-query';
+import React, { Suspense, useState } from 'react'
+import QuizQuestion from './QuizzQuestions';
+import { useDiffentPhase } from '@/zustand/firstphase';
 
-const AiQuiz = ({ subject, onNext }: { subject: string; onNext: (score: number) => void }) => {
-  const [score, setScore] = useState(0)
+import { toast } from 'sonner';
+
+const AiQuiz = ({ subject }: { subject: string; }) => {
   
-  const handleQuizSubmit = () => {
-    // Simulating AI Quiz Score (Replace with actual API call)
-    const finalScore = Math.floor(Math.random() * 11)
-    setScore(finalScore)
-    alert(`You scored ${finalScore}/10`)
-    onNext(finalScore)
+  
+
+  const { data: questions, error, isFetching } = useQuery<any>({
+    queryKey: ['fetchQuestions'],
+    queryFn: async () => await FirstPhaseQuizz(subject)
+  });
+
+  if (isFetching) {
+    return <div>Loading...</div>;
   }
 
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  if (!questions || questions.length === 0) {
+    return <div>No questions available</div>;
+  }
+
+  const handleQuizComplete = (score: number, attempted: number) => {
+    toast.success(`Quiz completed. Score: ${score}, Attempted: ${attempted}`)
+  
+  };
+
   return (
-    <div>
+    <div className="min-h-screen flex flex-col items-center justify-center">
       <h2 className="text-2xl font-semibold mb-4">AI Knowledge Quiz on {subject}</h2>
       <p>Answer the 10 AI-generated questions to test your current knowledge.</p>
-      <button className="mt-4 px-4 py-2 rounded-lg hover:bg-muted" onClick={handleQuizSubmit}>
-        Submit Quiz
-      </button>
-    </div>
-  )
-}
 
-export default AiQuiz
+      <Suspense fallback={<div>Loading questions...</div>}>
+        <QuizQuestion questions={questions} onComplete={handleQuizComplete} />
+      </Suspense>
+
+     
+    </div>
+  );
+};
+
+export default AiQuiz;

@@ -22,6 +22,7 @@ export default function K12Form() {
       grade: "8",
       board: "CBSE",
       stream: "",
+      state:'',
       city: "",
       country: "India",
     },
@@ -49,7 +50,7 @@ export default function K12Form() {
           className="w-full border rounded p-2"
           placeholder="Enter school name"
         />
-        {errors.school && <p>{errors.school.message}</p>}
+        {errors.school && <p className="text-red-500">{errors.school.message}</p>}
       </div>
 
       <div>
@@ -66,7 +67,7 @@ export default function K12Form() {
             ))}
           </SelectContent>
         </Select>
-        {errors.grade && <p>{errors.grade.message}</p>}
+        {errors.grade && <p className="text-red-500">{errors.grade.message}</p>}
       </div>
 
       <div>
@@ -83,7 +84,7 @@ export default function K12Form() {
             ))}
           </SelectContent>
         </Select>
-        {errors.board && <p>{errors.board.message}</p>}
+        {errors.board && <p className="text-red-500">{errors.board.message}</p>}
       </div>
 
       <div>
@@ -109,7 +110,16 @@ export default function K12Form() {
           className="w-full border rounded p-2"
           placeholder="Enter your city"
         />
-        {errors.city && <p>{errors.city.message}</p>}
+        {errors.city && <p className="text-red-500">{errors.city.message}</p>}
+      </div>
+      <div>
+        <label>State</label>
+        <input
+          {...register("state")}
+          className="w-full border rounded p-2"
+          placeholder="Enter your city"
+        />
+        {errors.state && <p className="text-red-500">{errors.state.message}</p>}
       </div>
 
       <div>
@@ -126,7 +136,7 @@ export default function K12Form() {
             ))}
           </SelectContent>
         </Select>
-        {errors.country && <p>{errors.country.message}</p>}
+        {errors.country && <p className="text-red-500">{errors.country.message}</p>}
       </div>
 
       <Button type="submit" className="w-full">
