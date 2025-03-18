@@ -59,7 +59,7 @@ export async function saveK12Details(formData :z.infer <typeof formSchema>) {
       return { success: true, data: newData };
     }
   } catch (error) {
-    return { success: false, message: error instanceof z.ZodError ? error.errors : error.message };
+    return { success: false, message: error instanceof z.ZodError ? error.errors : error };
   }
 }
 
