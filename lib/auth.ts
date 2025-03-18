@@ -19,13 +19,15 @@ export const auth = betterAuth({
         expiresIn: 60 * 60 * 24 * 7, // 7 days
         updateAge: 60 * 60 * 24 // 1 day (every 1 day the session expiration is updated)
     },
+
     socialProviders: {
+        
         google: {
             clientId: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
             mapProfileToUser:async(user)=>{
                 // check fro async functions
-          
+                console.log(user)
                 const users = await prisma.user.findMany({})
                 console.log('all users ->',users)
                 console.log('prfile of oauth user',user)
