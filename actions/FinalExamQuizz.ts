@@ -17,15 +17,15 @@ export async function FinalExamQuizz(id:string,subject:string) {
             },
         
         })
-    const captions = await getSubtitles({
-        videoID: id,
-        lang: 'en', 
+    // const captions = await getSubtitles({
+    //     videoID: id,
+    //     lang: 'en', 
     
-    });
-    const textCaptions = captions.map((caption) => caption.text).join('\n');
-    console.log(textCaptions)
+    // });
+    // const textCaptions = captions.map((caption) => caption.text).join('\n');
+    // console.log(textCaptions)
 
-        const prompt = `${textCaptions} based onthis lecture generate 5 quizz questions for the subject ${subject} of class ${user?.grade} of board ${user?.board} ${user?.state} state this is to test the user on there knowlage on the topic that they have not leaned yet
+        const prompt = `generate 5 quizz questions for the subject ${subject} of class ${user?.grade} of board ${user?.board} ${user?.state} state this is to test the user on there knowlage on the topic that they have not leaned yet
         give me the data in the following formate.Provide only the array without any other things. Give me exactly like this format without any changes in the format here is the example for the physics subject, [
         { question: 'What is the SI unit of force?', options: ['Watt', 'Joule', 'Newton', 'Pascal'], correct: 2, fact: 'The SI unit of force is the Newton, named after Sir Isaac Newton.' },
         { question: 'What is the speed of light?', options: ['3x10^8 m/s', '3x10^6 m/s', '3x10^10 m/s', '3x10^5 m/s'], correct: 0, fact: 'The speed of light in vacuum is approximately 3x10^8 meters per second.' },
