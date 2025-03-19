@@ -27,10 +27,7 @@ export const auth = betterAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
             mapProfileToUser:async(user)=>{
                 // check fro async functions
-                console.log(user)
-                const users = await prisma.user.findMany({})
-                console.log('all users ->',users)
-                console.log('prfile of oauth user',user)
+             
                 return {
                     oauthRole:'admin'
                 }

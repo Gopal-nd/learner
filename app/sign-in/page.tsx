@@ -15,15 +15,11 @@ export default function SignIn() {
 
 
   return (
-    <Card className="max-w-md">
-      <CardHeader>
-        <CardTitle className="text-lg md:text-xl">Sign In</CardTitle>
-        <CardDescription className="text-xs md:text-sm">
-          Enter your email below to login to your account
-        </CardDescription>
-      </CardHeader>
+    <Card className="max-w-md flex min-h-screen min-w-screen  items-center justify-center">
+  
       <CardContent>
         <div className="grid gap-4">
+          <h1 className="text-center text-xl font-extrabold">Login Now</h1>
           <div className={cn(
               "w-full gap-2 flex items-center",
               "justify-between flex-col"
@@ -36,7 +32,7 @@ export default function SignIn() {
                   onClick={async () => {
                     await signIn.social({
                       provider: "google",
-                      callbackURL: "/",
+                      callbackURL: "/dashboard",
                       newUserCallbackURL:'/onboarding',
                     });
                   }}

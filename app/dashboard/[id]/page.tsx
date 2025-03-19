@@ -10,11 +10,6 @@ import { useEffect } from "react"
 const LearningPage = async({ params }: { params: Promise<{ id: string }> }) => {
     const { id } = await params
  
-  //  const reset = useDiffentPhase((state) => state.reset);
-  //   const phase = useDiffentPhase((state) => state.phase);
-  //   useEffect(()=>{
-  //     reset()
-  //   })
   return (
    <Main id={id}/>
   )

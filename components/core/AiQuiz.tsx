@@ -34,9 +34,10 @@ const AiQuiz = ({ subject }: { subject: string; }) => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center">
+    <div className="min-h-screen flex flex-col items-center gap-4 justify-center">
+      
       <h2 className="text-2xl font-semibold mb-4">AI Knowledge Quiz on {subject}</h2>
-      <p>Answer the 10 AI-generated questions to test your current knowledge.</p>
+      <p>Answer the AI-generated questions to test your current knowledge.</p>
 
       <Suspense fallback={<div>Loading questions...</div>}>
         <QuizQuestion questions={questions} onComplete={handleQuizComplete} />

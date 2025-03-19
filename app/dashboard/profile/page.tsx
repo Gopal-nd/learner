@@ -32,10 +32,10 @@ const LearningHistoryWithPagination: React.FC = () => {
   // State to toggle details for each record by id.
   const [expanded, setExpanded] = useState<{ [id: string]: boolean }>({})
 
-  const { data, error, isLoading, isFetching } = useQuery<LearningsResponse>({
+  const { data, error, isLoading, isFetching } = useQuery<any>({
     queryKey: ['getLearnings', page],
     queryFn: async () => await getLearnings(page, limit),
-    keepPreviousData: true,
+    
   })
 
   if (isLoading || isFetching) {
@@ -59,7 +59,7 @@ const LearningHistoryWithPagination: React.FC = () => {
         <p>No learning records found.</p>
       ) : (
         <div className="space-y-4">
-          {data.data.map((record) => {
+          {data.data.map((record:any) => {
             let initialQuizQuestions: any[] = []
             let finalExamQuestions: any[] = []
 

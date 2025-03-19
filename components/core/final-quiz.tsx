@@ -37,7 +37,7 @@ if(!videoId){
   }
 
    if (isFetching) {
-      return <div>Loading...</div>;
+      return <div>Preparing Questions from the video....</div>;
     }
   
     if (error) {

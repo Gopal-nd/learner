@@ -17,20 +17,6 @@ if(!session){
 
 }
 
-// const user = {email:'docode999@gmail.com',name:'Gopal ND'}
-
-// const role = user.email=='docode999@gmail.com'? UserRole.ADMIN :UserRole.USER
-// const res =    await prisma.user.update({
-//        where:{
-//            email:user.email
-//        },
-//        data:{
-//            role:role,
-//            firstName: user.name.split(" ")[0]||null,
-//            lastName: user.name.split(" ")[1]||null,
-//        }
-//    })
-//    console.log(res)
 
 const cookies = req.headers.get("set-cookie");
 const headers = req.headers.get("x-custom-header");

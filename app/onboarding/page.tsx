@@ -55,12 +55,12 @@ export default function K12Form() {
 
       <div>
         <label>Grade</label>
-        <Select onValueChange={(value) => setValue("grade", value)} defaultValue="8">
+        <Select onValueChange={(value) => setValue("grade", value as any)} defaultValue="8">
           <SelectTrigger>
             <SelectValue placeholder="Select Grade" />
           </SelectTrigger>
           <SelectContent>
-            {["7", "8", "9", "10", "11", "12"].map((grade) => (
+            {["8", "9", ].map((grade) => (
               <SelectItem key={grade} value={grade}>
                 Grade {grade}
               </SelectItem>
@@ -72,7 +72,7 @@ export default function K12Form() {
 
       <div>
         <label>Board</label>
-        <Select onValueChange={(value) => setValue("board", value)} defaultValue="CBSE">
+        <Select onValueChange={(value) => setValue("board", value as any)} defaultValue="CBSE">
           <SelectTrigger>
             <SelectValue placeholder="Select Board" />
           </SelectTrigger>
@@ -124,7 +124,7 @@ export default function K12Form() {
 
       <div>
         <label>Country</label>
-        <Select onValueChange={(value) => setValue("country", value)} defaultValue="India">
+        <Select onValueChange={(value) => setValue("country", value as any)} defaultValue="India">
           <SelectTrigger>
             <SelectValue placeholder="Select Country" />
           </SelectTrigger>
