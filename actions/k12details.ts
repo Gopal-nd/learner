@@ -14,7 +14,7 @@ export async function saveK12Details(formData: z.infer<typeof formSchema>) {
     });
     
     if (!session) {
-      return { success: false };
+      return { success: false,data:'user session not there' };
     }
 
     // Validate data

@@ -1,24 +1,41 @@
-import { NextRequest, NextResponse } from "next/server";
-import { verifySession } from "./lib/verifyToken";
+import { betterFetch } from "@better-fetch/fetch";
+import { NextResponse, type NextRequest } from "next/server";
+import type { Session } from "@/lib/auth";
 
-export async function middleware(request: NextRequest) {
+const authRoutes = ["/sign-in", "/sign-up"];
 
-  const sessionCookie: any = request.cookies.get("better-auth.session_token");
 
-  // Redirect to /sign-in if no session cookie is found
-  if (!sessionCookie && !request.nextUrl.pathname.startsWith('/sign-in')) {
-    console.log("Redirecting to /sign-in because no session cookie found.");
+export default async function authMiddleware(request: NextRequest) {
+  const pathName = request.nextUrl.pathname;
+  const isAuthRoute = authRoutes.includes(pathName);
+
+
+  const { data: session } = await betterFetch<Session>(
+    "/api/auth/get-session",
+    {
+      baseURL: process.env.BETTER_AUTH_URL,
+      headers: {
+        //get the cookie from the request
+        cookie: request.headers.get("cookie") || "",
+      },
+    },
+  );
+
+  if (!session) {
+    if (isAuthRoute ) {
+      return NextResponse.next();
+    }
     return NextResponse.redirect(new URL("/sign-in", request.url));
   }
 
-  // If user is on /sign-in and has a session, redirect to /dashboard
-  if (request.nextUrl.pathname.startsWith('/sign-in') && sessionCookie) {
-    console.log("Redirecting to /dashboard because session exists.");
-    return NextResponse.redirect(new URL("/dashboard", request.url));
+  if (isAuthRoute ) {
+    return NextResponse.redirect(new URL("/", request.url));
   }
+
 
   return NextResponse.next();
 }
+
 
 export const config = {
   matcher: [
@@ -26,6 +43,8 @@ export const config = {
     "/server", 
     "/api/me", 
     "/admin/:path*", 
-    "/sign-in"
+    "/sign-in",
+    "/onboarding",
+
   ], 
 };
