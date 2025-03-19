@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
 import { create } from 'zustand';
-import { useDiffentPhase, useFirstPhaseQuizStore } from '@/zustand/firstphase';
+import { useDiffentPhase, useFinalPhaseQuizStore, useFirstPhaseQuizStore } from '@/zustand/firstphase';
 
 // Define the structure of a quiz question.
 interface Question {
@@ -19,7 +19,7 @@ interface QuizQuestionProps {
   onComplete: (score: number, attempted: number) => void;
 }
 
-const QuizQuestion: React.FC<QuizQuestionProps> = ({ questions, onComplete }) => {
+const FinalQuizQuestions: React.FC<QuizQuestionProps> = ({ questions, onComplete }) => {
   const {
     currentQuestion,
     userAnswers,
@@ -27,7 +27,7 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({ questions, onComplete }) =>
     nextQuestion,
     previousQuestion,
     initialize,
-  } = useFirstPhaseQuizStore();
+  } = useFinalPhaseQuizStore();
 
   // Initialize the store's answers array when the questions are loaded.
   useEffect(() => {
@@ -129,4 +129,4 @@ const QuizQuestion: React.FC<QuizQuestionProps> = ({ questions, onComplete }) =>
   );
 };
 
-export default QuizQuestion;
+export default FinalQuizQuestions;

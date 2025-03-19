@@ -1,16 +1,16 @@
 'use client'
-import { useDiffentPhase, useQuizStore } from '@/zustand/firstphase'
+import { useDiffentPhase, useFirstPhaseQuizStore, useUserDetails } from '@/zustand/firstphase'
 import React from 'react'
 import { YouTubeVideoCardPlayer } from './YouTubeVideoCardPlayer'
-
+import {dummyVideoLinks} from '@/data/videos'
 const VideoLectures = ({ subject }: { subject: string }) => {
 
-
-  const dummyVideoLinks = [
-    "https://www.youtube.com/embed/dQw4w9WgXcQ",
-    "https://www.youtube.com/embed/C0DPdy98e4c",
-    "https://www.youtube.com/embed/3JZ_D3ELwOQ",
-  ];
+  
+const userClass = useUserDetails((state)=>state.class)
+const mainSubject = useUserDetails((state)=>state.subject)
+const sub = mainSubject|| 'Science'
+const videos = dummyVideoLinks[userClass][sub][subject]
+console.log("user classs",userClass, "videos", videos)
 
   const increment = useDiffentPhase((state) => state.increment)
   const phase = useDiffentPhase((state) => state.phase)
@@ -19,7 +19,7 @@ const VideoLectures = ({ subject }: { subject: string }) => {
     increment(phase)
     console.log("All videos have been played!");
   };
-    const score = useQuizStore((state)=>state.score)
+    const score = useFirstPhaseQuizStore((state)=>state.score)
 
   return (
     <div>
@@ -27,7 +27,7 @@ const VideoLectures = ({ subject }: { subject: string }) => {
 
       <h2 className="text-2xl font-semibold mb-4">Video Lectures on {subject}</h2>
 
-      <YouTubeVideoCardPlayer videoLinks={dummyVideoLinks} onEnd={handleEnd} />
+      <YouTubeVideoCardPlayer videoLinks={videos} onEnd={handleEnd} />
 
 
     </div>

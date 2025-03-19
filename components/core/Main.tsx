@@ -4,6 +4,7 @@ import AiQuiz from "@/components/core/AiQuiz"
 import FinalQuiz from "@/components/core/final-quiz"
 import VideoLectures from "@/components/core/video-lectures"
 import { useDiffentPhase } from '@/zustand/firstphase'
+import ResultPage from './Result'
 
 
 
@@ -24,6 +25,8 @@ const Main = ({id}:{id:string}) => {
       
       
       {phase === 3 && <FinalQuiz subject={id} />}
+      {phase === 4 && <ResultPage subject={id} />}
+
     </div>
   )
 }

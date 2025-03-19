@@ -3,7 +3,7 @@
 import userDetails from '@/actions/userDetails'
 import { Button } from '@/components/ui/button'
 import { useSession } from '@/lib/auth-client'
-import { useDiffentPhase } from '@/zustand/firstphase'
+import { useDiffentPhase, useUserDetails } from '@/zustand/firstphase'
 import { useQuery } from '@tanstack/react-query'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
@@ -26,12 +26,15 @@ const subjects: Record<string, string[]> = {
 const DashboardPage: React.FC = () => {
   const reset = useDiffentPhase((state) => state.reset);
   const phase = useDiffentPhase((state) => state.phase);
+  const userSubject = useUserDetails((state) => state.setSubject);
   useEffect(()=>{
     reset()
   })
   const session = useSession();
+  const UserClass = useUserDetails((state:any)=>state.setClass)
   const { data: user, error, isFetching } = useQuery<any>({ queryKey: ['userDetails'], queryFn: userDetails });
   const [selectedSubject, setSelectedSubject] = useState<string | null>(null);
+
 
   if (isFetching) {
     return <div className="text-center py-10 text-lg">Loading...</div>;
@@ -41,6 +44,9 @@ const DashboardPage: React.FC = () => {
     return <div className="text-center text-red-500">Error loading user details. Please try again later.</div>;
   }
 
+  
+    UserClass(user.grade)
+  
   return (
     <div className="p-2 rounded-xl shadow-lg mx-auto">
       {/* Welcome Section */}
@@ -65,7 +71,9 @@ const DashboardPage: React.FC = () => {
           {Object.keys(subjects).map((subject) => (
             <button
               key={subject}
-              onClick={() => setSelectedSubject(subject)}
+              onClick={() =>{
+                userSubject(subject)
+                 setSelectedSubject(subject)}}
               className={`px-6 py-3 rounded-lg font-medium transition hover:bg-blue-500`}
             >
               {subject}

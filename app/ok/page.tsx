@@ -1,26 +1,25 @@
 'use client'
 import { FinalExamQuizz } from '@/actions/FinalExamQuizz';
+import QuizQuestion from '@/components/core/QuizzQuestions';
 import dummyVideoLinks from '@/data/videos';
 import { useUserDetails } from '@/zustand/firstphase';
 import { useQuery } from '@tanstack/react-query';
 import React, { Suspense, useState } from 'react'
 import { toast } from 'sonner';
-import QuizQuestion from './QuizzQuestions';
-import FinalQuizQuestions from './FinalQuizzQuestions';
 
 const FinalQuiz = ({ subject, }: { subject: string; }) => {
 
 
   const userClass = useUserDetails((state)=>state.class)
   const mainSubject = useUserDetails((state)=>state.subject)
-  const video = dummyVideoLinks[userClass][mainSubject][subject]
+  const video = [   "https://www.youtube.com/embed/vgRjacM6cys?si=h_Ml8GDLtlIEkGBZ",]
   const videoId = extractVideoId(video[0])
 if(!videoId){
   toast.dismiss('something went wrong')
 }
   const { data: questions, error, isFetching } = useQuery<any>({
     queryKey: ['fetchQuestions'],
-    queryFn: async () => await FinalExamQuizz(videoId,subject)
+    queryFn: async () => await FinalExamQuizz(videoId,subject='chemistry')
   });
   function extractVideoId(url: string) {
     try {
@@ -58,7 +57,7 @@ if(!videoId){
       <h2 className="text-2xl font-semibold mb-4">Final Exam on {subject}</h2>
   
       <Suspense fallback={<div>Loading questions...</div>}>
-        <FinalQuizQuestions questions={questions} onComplete={handleQuizComplete} />
+        <QuizQuestion questions={questions} onComplete={handleQuizComplete} />
       </Suspense>
      
     </div>
